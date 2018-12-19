@@ -9,7 +9,7 @@ namespace ImageFolderizer.App.Models
         StorageFile File { get; }
         string FileType { get; }
         string Name { get; }
-
-        Task<BitmapImage> GetThumbnailAsync();
+        BitmapImage Thumbnail { get; }
+        Task UpdateThumbnailAsync(uint requestedSize);
     }
 }

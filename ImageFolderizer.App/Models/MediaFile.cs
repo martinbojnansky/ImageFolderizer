@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageFolderizer.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,15 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageFolderizer.App.Models
 {
-    public abstract class MediaFile : IMediaFile
+    public abstract class MediaFile : PropertyChangedBase ,IMediaFile
     {
         public StorageFile File { get; }
 
         public string Name { get; }
 
         public string FileType { get; }
+
+        public BitmapImage Thumbnail { get; private set; }
 
         public MediaFile(StorageFile file)
         {
@@ -24,15 +27,16 @@ namespace ImageFolderizer.App.Models
             FileType = file.FileType;
         }
 
-        public virtual async Task<BitmapImage> GetThumbnailAsync()
+        public virtual async Task UpdateThumbnailAsync(uint requestedSize)
         {
-            var thumbnail = await File.GetThumbnailAsync(ThumbnailMode.PicturesView);
+            var thumbnail = await File.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, requestedSize);
 
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.SetSource(thumbnail);
             thumbnail.Dispose();
 
-            return bitmapImage;
+            Thumbnail = bitmapImage;
+            RaisePropertyChanged(nameof(Thumbnail));
         }
     }
 }

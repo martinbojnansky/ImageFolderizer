@@ -7,12 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:navigation="using:ImageFolderizer.Core.Navigation"
     xmlns:wcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:views="using:ImageFolderizer.App.Views"
-    xmlns:viewModels="using:ImageFolderizer.App.ViewModels"
+    xmlns:models="using:ImageFolderizer.App.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    x:Name="Root"
+    DataContext="{x:Bind ViewModel}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <wcontrols:TabView>
             <wcontrols:TabView.Resources>
                 <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
@@ -27,17 +32,23 @@
                     ItemsSource="{x:Bind ViewModel.MediaFiles, Mode=OneWay}"
                     SelectionMode="Multiple">
                     <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding Name}"/>
+                        <DataTemplate
+                            x:DataType="models:MediaFile">
+                            <Grid
+                                HorizontalAlignment="Center"
+                                MaxHeight="750">
+                                <Image 
+                                    Stretch="Uniform"
+                                    Source="{x:Bind Thumbnail, Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <wcontrols:StaggeredPanel 
-                                DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, Mode=OneWay}"
-                                HorizontalAlignment="Center"/>
+                                DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, ElementName=Root}"
+                                HorizontalAlignment="Stretch"
+                                />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
@@ -62,7 +73,19 @@
                 </Button>
             </wcontrols:TabView.TabEndHeader>
         </wcontrols:TabView>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center">
+            <Slider
+                Width="500"
+                Minimum="200"
+                Maximum="1000"
+                TickFrequency="50"
+                SnapsTo="Ticks"
+                Value="{x:Bind ViewModel.ThumbnailWidth, Mode=TwoWay}"/>
+        </StackPanel>
         <wcontrols:Loading 
+            Grid.RowSpan="2"
             IsLoading="{x:Bind ViewModel.IsBusy, Mode=OneWay}"
             Background="White"
             Opacity="0.6">

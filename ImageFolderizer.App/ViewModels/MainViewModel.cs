@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ImageFolderizer.App.Models;
 using ImageFolderizer.App.Services;
 using ImageFolderizer.App.Views;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 
 namespace ImageFolderizer.App.ViewModels
@@ -39,9 +41,9 @@ namespace ImageFolderizer.App.ViewModels
             }
         }
 
-        private int _thumbnailWidth = 300;
+        private double _thumbnailWidth = 500.00;
 
-        public int ThumbnailWidth
+        public double ThumbnailWidth
         {
             get => _thumbnailWidth;
             set
@@ -49,7 +51,7 @@ namespace ImageFolderizer.App.ViewModels
                 _thumbnailWidth = value;
                 RaisePropertyChanged();
             }
-        }
+        } 
 
         public MainViewModel(IMediaFilesProvider mediaFilesProvider)
         {
@@ -57,9 +59,9 @@ namespace ImageFolderizer.App.ViewModels
         }
 
         public async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            await LoadSourceMediaFilesAsync();       
+        { 
             base.OnNavigatedTo(e);
+            await LoadSourceMediaFilesAsync();
         }
 
         public async Task LoadSourceMediaFilesAsync()
@@ -67,11 +69,16 @@ namespace ImageFolderizer.App.ViewModels
             IsBusy = true;
             MediaFiles = new ObservableCollection<IMediaFile>(await _mediaFilesProvider.GetSourceMediaFilesAsync());
             IsBusy = false;
+
+            foreach (var file in MediaFiles)
+            {
+                await file.UpdateThumbnailAsync((uint)ThumbnailWidth);
+            }
         }
 
         public void NavigateToSettingsPage()
         {
-            Navigation.GoTo(typeof(SettingsView), "This is navigation parameter");
+            Navigation.GoTo(typeof(SettingsView));
         }
     }
 }

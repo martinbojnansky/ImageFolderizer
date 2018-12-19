@@ -25,7 +25,7 @@
     <Compile Include="IoC\IoCContainerBase.cs" />
     <Compile Include="IoC\MVVMLocator.cs" />
     <Compile Include="Localization\LocalizedResources.cs" />
-    <Compile Include="Navigation\INavigationPage.cs" />
+    <Compile Include="Navigation\IView.cs" />
     <Compile Include="Navigation\NavigationPage.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

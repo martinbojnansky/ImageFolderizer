@@ -7,38 +7,68 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:navigation="using:ImageFolderizer.Core.Navigation"
     xmlns:wcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:views="using:ImageFolderizer.App.Views"
+    xmlns:viewModels="using:ImageFolderizer.App.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <wcontrols:TabView>
-        <wcontrols:TabView.Resources>
-            <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
-            <x:Double x:Key="TabViewItemHeaderMinWidth">48</x:Double>
-            <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
-        </wcontrols:TabView.Resources>
-        <wcontrols:TabViewItem
-            Header="Pick"
-            Icon="SelectAll"
-            Width="{StaticResource TabViewItemHeaderMaxWidth}">
-        </wcontrols:TabViewItem>
-        <wcontrols:TabViewItem
-            Header="Organize"
-            Icon="MoveToFolder"
-            Width="{StaticResource TabViewItemHeaderMaxWidth}">
-        </wcontrols:TabViewItem>
-        <wcontrols:TabView.TabEndHeader>
-            <Button 
-                Width="{StaticResource TabViewItemHeaderMinWidth}"
-                Height="{StaticResource TabViewItemHeaderMinHeight}"
-                Margin="-1,0,0,0"
-                BorderThickness="1" 
-                Background="Transparent" 
-                Style="{StaticResource ButtonRevealStyle}"
-                Click="{x:Bind ViewModel.NavigateToSettingsPage}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon Symbol="Setting"/>
-                </Viewbox>
-            </Button>
-        </wcontrols:TabView.TabEndHeader>
-    </wcontrols:TabView>
+    <Grid>
+        <wcontrols:TabView>
+            <wcontrols:TabView.Resources>
+                <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
+                <x:Double x:Key="TabViewItemHeaderMinWidth">48</x:Double>
+                <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
+            </wcontrols:TabView.Resources>
+            <wcontrols:TabViewItem
+                Header="Pick"
+                Icon="SelectAll"
+                Width="{StaticResource TabViewItemHeaderMaxWidth}">
+                <GridView
+                    ItemsSource="{x:Bind ViewModel.MediaFiles, Mode=OneWay}"
+                    SelectionMode="Multiple">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="{Binding Name}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <wcontrols:StaggeredPanel 
+                                DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, Mode=OneWay}"
+                                HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </wcontrols:TabViewItem>
+            <wcontrols:TabViewItem
+                Header="Organize"
+                Icon="MoveToFolder"
+                Width="{StaticResource TabViewItemHeaderMaxWidth}">
+            </wcontrols:TabViewItem>
+            <wcontrols:TabView.TabEndHeader>
+                <Button 
+                    Width="{StaticResource TabViewItemHeaderMinWidth}"
+                    Height="{StaticResource TabViewItemHeaderMinHeight}"
+                    Margin="-1,0,0,0"
+                    BorderThickness="1" 
+                    Background="Transparent" 
+                    Style="{StaticResource ButtonRevealStyle}"
+                    Click="{x:Bind ViewModel.NavigateToSettingsPage}">
+                    <Viewbox MaxWidth="16" MaxHeight="16">
+                        <SymbolIcon Symbol="Setting"/>
+                    </Viewbox>
+                </Button>
+            </wcontrols:TabView.TabEndHeader>
+        </wcontrols:TabView>
+        <wcontrols:Loading 
+            IsLoading="{x:Bind ViewModel.IsBusy, Mode=OneWay}"
+            Background="White"
+            Opacity="0.6">
+            <ProgressRing
+                IsActive="True"/>
+        </wcontrols:Loading>
+    </Grid>
+
 </navigation:NavigationPage>

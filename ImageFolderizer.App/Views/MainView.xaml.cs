@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ImageFolderizer.App.Views
 {
-    public sealed partial class MainView : NavigationPage, INavigationPage<MainViewModel>
+    public sealed partial class MainView : NavigationPage, IView<MainViewModel>
     {
         public MainViewModel ViewModel { get; set; } = ((App)Application.Current).MvvmLocator.ResolveViewModel<MainViewModel>();
 

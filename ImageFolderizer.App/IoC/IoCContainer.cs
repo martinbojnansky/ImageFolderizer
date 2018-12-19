@@ -10,6 +10,7 @@ using ImageFolderizer.Core.Storage;
 using ImageFolderizer.App.ViewModels;
 using ImageFolderizer.Core.ViewManagement;
 using ImageFolderizer.App.Models;
+using ImageFolderizer.App.Services;
 
 namespace ImageFolderizer.App.IoC
 {
@@ -28,6 +29,7 @@ namespace ImageFolderizer.App.IoC
             AutoRegister<ViewModelBase>();
 
             RegisterSingle<ISettings, Settings>();
+            RegisterSingle<IMediaFilesProvider, MediaFilesProvider>();
         }
     }
 }

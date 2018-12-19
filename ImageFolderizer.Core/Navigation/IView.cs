@@ -7,7 +7,7 @@ using ImageFolderizer.Core.ViewModel;
 
 namespace ImageFolderizer.Core.Navigation
 {
-    public interface INavigationPage<T> where T : ViewModelBase
+    public interface IView<T> where T : ViewModelBase
     {
         T ViewModel { get; set; }
     }

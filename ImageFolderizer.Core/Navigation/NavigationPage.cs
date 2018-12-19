@@ -20,7 +20,7 @@ namespace ImageFolderizer.Core.Navigation
         public NavigationPage() : base()
         {
             _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
-            _viewModel = GetType()?.GetProperty(nameof(INavigationPage<ViewModelBase>.ViewModel))?.GetValue(this) as ViewModelBase;
+            _viewModel = GetType()?.GetProperty(nameof(IView<ViewModelBase>.ViewModel))?.GetValue(this) as ViewModelBase;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

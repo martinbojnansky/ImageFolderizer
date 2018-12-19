@@ -9,24 +9,30 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageFolderizer.App.Models
 {
-    public abstract class MediaFile<T> where T : IStorageItemExtraProperties
+    public abstract class MediaFile : IMediaFile
     {
         public StorageFile File { get; }
 
-        public T Properties { get; }
+        public string Name { get; }
+
+        public string FileType { get; }
+
+        public MediaFile(StorageFile file)
+        {
+            File = file;
+            Name = file.DisplayName;
+            FileType = file.FileType;
+        }
 
         public virtual async Task<BitmapImage> GetThumbnailAsync()
         {
             var thumbnail = await File.GetThumbnailAsync(ThumbnailMode.PicturesView);
+
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.SetSource(thumbnail);
             thumbnail.Dispose();
 
             return bitmapImage;
         }
-
-        public string Name { get; }
-
-        public string FileType { get; }
     }
 }

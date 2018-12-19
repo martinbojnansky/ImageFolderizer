@@ -6,10 +6,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:navigation="using:ImageFolderizer.Core.Navigation"
+    xmlns:wcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid HorizontalAlignment="Center">
-        <TextBlock Text="{x:Bind ViewModel.Navigation.Parameters[0]}"/>
-    </Grid>
+    <navigation:NavigationPage.Resources>
+    </navigation:NavigationPage.Resources>
+
+    <ScrollViewer
+        Padding="{StaticResource ViewPadding}">
+        <StackPanel>
+            <wcontrols:HeaderedContentControl
+                Header="Sources">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <Button
+                        Content="Change"
+                        Click="{x:Bind ViewModel.SelectSourceFolderAsync}"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Settings.SourceFolder, Mode=OneWay}"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+            </wcontrols:HeaderedContentControl>
+            <wcontrols:HeaderedContentControl
+                Header="Destination">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <Button
+                        Content="Change"
+                        Click="{x:Bind ViewModel.SelectDestinationFolderAsync}"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Settings.DestinationFolder, Mode=OneWay}"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+            </wcontrols:HeaderedContentControl>
+        </StackPanel>
+    </ScrollViewer>
 </navigation:NavigationPage>

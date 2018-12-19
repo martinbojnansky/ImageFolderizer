@@ -9,6 +9,7 @@ using ImageFolderizer.Core.Navigation;
 using ImageFolderizer.Core.Storage;
 using ImageFolderizer.App.ViewModels;
 using ImageFolderizer.Core.ViewManagement;
+using ImageFolderizer.App.Models;
 
 namespace ImageFolderizer.App.IoC
 {
@@ -25,6 +26,8 @@ namespace ImageFolderizer.App.IoC
             Register<IAppBar, AppBar>();
 
             AutoRegister<ViewModelBase>();
+
+            RegisterSingle<ISettings, Settings>();
         }
     }
 }

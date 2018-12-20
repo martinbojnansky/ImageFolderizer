@@ -28,7 +28,7 @@
                         TextWrapping="Wrap"/>
                 </StackPanel>
             </wcontrols:HeaderedContentControl>
-            <wcontrols:HeaderedContentControl
+            <!--<wcontrols:HeaderedContentControl
                 Header="Destination">
                 <StackPanel
                     Orientation="Horizontal">
@@ -39,7 +39,7 @@
                         Text="{x:Bind ViewModel.Settings.DestinationFolder, Mode=OneWay}"
                         TextWrapping="Wrap"/>
                 </StackPanel>
-            </wcontrols:HeaderedContentControl>
+            </wcontrols:HeaderedContentControl>-->
         </StackPanel>
     </ScrollViewer>
 </navigation:NavigationPage>

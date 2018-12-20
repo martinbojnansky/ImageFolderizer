@@ -8,10 +8,10 @@
     xmlns:navigation="using:ImageFolderizer.Core.Navigation"
     xmlns:wcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:ImageFolderizer.App.Models"
+    xmlns:controls="using:ImageFolderizer.App.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    x:Name="Root"
-    DataContext="{x:Bind ViewModel}">
+    x:Name="Root">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
                 <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
                 <x:Double x:Key="TabViewItemHeaderMinWidth">48</x:Double>
                 <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
-                <x:Double x:Key="MaxThumbnailHeight">750</x:Double>
+                <!--<x:Double x:Key="MaxThumbnailHeight">750</x:Double>-->
             </wcontrols:TabView.Resources>
             <wcontrols:TabViewItem
                 Header="Pick"
@@ -38,14 +38,16 @@
                             x:DataType="models:MediaFile">
                             <Grid
                                 HorizontalAlignment="Center"
-                                MaxHeight="{StaticResource MaxThumbnailHeight}">
+                                Margin="5"
+                                MaxHeight="{Binding ViewModel.ThumbnailMaxHeight, ElementName=Root}">
                                 <Image 
                                     Stretch="Uniform"
                                     Source="{x:Bind Thumbnail, Mode=OneWay}"/>
                                 <Button 
                                     HorizontalAlignment="Stretch" 
                                     VerticalAlignment="Bottom"
-                                    HorizontalContentAlignment="Center">
+                                    HorizontalContentAlignment="Center"
+                                    Click="PlayMediaButton_Click">
                                     <SymbolIcon
                                         Symbol="{x:Bind Icon}"
                                         Foreground="White"
@@ -85,7 +87,7 @@
                                 x:DataType="models:MediaFile">
                                 <Grid
                                     HorizontalAlignment="Center"
-                                    MaxHeight="{StaticResource MaxThumbnailHeight}">
+                                    MaxHeight="{Binding ViewModel.ThumbnailMaxHeight, ElementName=Root}">
                                     <Image 
                                         Stretch="Uniform"
                                         Source="{x:Bind Thumbnail, Mode=OneWay}"/>
@@ -154,6 +156,8 @@
                 </StackPanel>
             </wcontrols:TabView.TabEndHeader>
         </wcontrols:TabView>
+        <controls:MediaFilePlayer
+            x:Name="MediaPlayer"/>
         <wcontrols:Loading 
             Grid.RowSpan="2"
             IsLoading="{x:Bind ViewModel.IsBusy, Mode=OneWay}"

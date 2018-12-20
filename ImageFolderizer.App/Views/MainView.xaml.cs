@@ -37,5 +37,13 @@ namespace ImageFolderizer.App.Views
         {
             ViewModel.MediaFilesToMove = new ObservableCollection<IMediaFile>(MoveMediaFilesGridView.SelectedItems.Cast<IMediaFile>());
         }
+
+        private async void PlayMediaButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.IsBusy = true;
+            var file = (sender as Button).DataContext as IMediaFile;
+            await MediaPlayer.OpenAsync(file);
+            ViewModel.IsBusy = false;
+        }
     }
 }

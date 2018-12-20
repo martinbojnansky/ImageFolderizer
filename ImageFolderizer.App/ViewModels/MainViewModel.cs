@@ -75,8 +75,11 @@ namespace ImageFolderizer.App.ViewModels
             {
                 _thumbnailWidth = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ThumbnailMaxHeight));
             }
-        } 
+        }
+
+        public double ThumbnailMaxHeight => ThumbnailWidth * 1.18;
 
         public MainViewModel(IMediaFilesProvider mediaFilesProvider)
         {

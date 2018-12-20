@@ -96,6 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\MediaFilePlayer.xaml.cs">
+      <DependentUpon>MediaFilePlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IoC\IoCContainer.cs" />
     <Compile Include="Models\ImageFile.cs" />
     <Compile Include="Models\IMediaFile.cs" />
@@ -146,10 +149,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\" />
     <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\MediaFilePlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

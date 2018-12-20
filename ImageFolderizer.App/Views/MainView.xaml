@@ -22,6 +22,7 @@
                 <x:Double x:Key="TabViewItemHeaderMinHeight">40</x:Double>
                 <x:Double x:Key="TabViewItemHeaderMinWidth">48</x:Double>
                 <x:Double x:Key="TabViewItemHeaderMaxWidth">200</x:Double>
+                <x:Double x:Key="MaxThumbnailHeight">750</x:Double>
             </wcontrols:TabView.Resources>
             <wcontrols:TabViewItem
                 Header="Pick"
@@ -31,15 +32,13 @@
                     x:Name="PickMediaFilesGridView"
                     ItemsSource="{x:Bind ViewModel.MediaFiles, Mode=OneWay}"
                     SelectionMode="Multiple"
-                    SelectionChanged="PickMediaFilesGridView_SelectionChanged"
-                    Padding="10">
+                    SelectionChanged="PickMediaFilesGridView_SelectionChanged">
                     <GridView.ItemTemplate>
                         <DataTemplate
                             x:DataType="models:MediaFile">
                             <Grid
                                 HorizontalAlignment="Center"
-                                MaxHeight="750"
-                                Padding="5">
+                                MaxHeight="{StaticResource MaxThumbnailHeight}">
                                 <Image 
                                     Stretch="Uniform"
                                     Source="{x:Bind Thumbnail, Mode=OneWay}"/>
@@ -50,8 +49,8 @@
                                     <SymbolIcon
                                         Symbol="{x:Bind Icon}"
                                         Foreground="White"
-                                        Width="48"
-                                        Height="48"
+                                        Width="{StaticResource IconSize}"
+                                        Height="{StaticResource IconSize}"
                                     />
                                 </Button>
                             </Grid>
@@ -62,7 +61,7 @@
                             <wcontrols:StaggeredPanel 
                                 DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, ElementName=Root}"
                                 HorizontalAlignment="Stretch"
-                                />
+                                Margin="{StaticResource ViewPadding}"/>
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
@@ -70,8 +69,7 @@
             <wcontrols:TabViewItem
                 Header="Move"
                 Icon="MoveToFolder"
-                Width="{StaticResource TabViewItemHeaderMaxWidth}"
-                Padding="10">
+                Width="{StaticResource TabViewItemHeaderMaxWidth}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -79,7 +77,7 @@
                     </Grid.RowDefinitions>
                     <GridView
                         x:Name="MoveMediaFilesGridView"
-                        ItemsSource="{x:Bind ViewModel.MediaFilesToMove, Mode=OneWay}"
+                        ItemsSource="{x:Bind ViewModel.PickedMediaFiles, Mode=OneWay}"
                         SelectionMode="Multiple"
                         SelectionChanged="MoveMediaFilesGridView_SelectionChanged">
                         <GridView.ItemTemplate>
@@ -87,8 +85,7 @@
                                 x:DataType="models:MediaFile">
                                 <Grid
                                     HorizontalAlignment="Center"
-                                    MaxHeight="750"
-                                    Padding="5">
+                                    MaxHeight="{StaticResource MaxThumbnailHeight}">
                                     <Image 
                                         Stretch="Uniform"
                                         Source="{x:Bind Thumbnail, Mode=OneWay}"/>
@@ -100,7 +97,7 @@
                                 <wcontrols:StaggeredPanel 
                                     DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, ElementName=Root}"
                                     HorizontalAlignment="Stretch"
-                                    />
+                                    Margin="{StaticResource ViewPadding}"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>
@@ -109,22 +106,28 @@
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Bottom"
                         HorizontalContentAlignment="Center"
-                        Padding="8">
+                        Click="{x:Bind ViewModel.MoveFilesAsync}">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon
                                 Symbol="MoveToFolder"
-                                Width="48"
-                                Height="48"/>
+                                Width="{StaticResource IconSize}"
+                                Height="{StaticResource IconSize}"/>
+                            <TextBlock
+                                Text="Move Files"
+                                VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </Grid>
             </wcontrols:TabViewItem>
             <wcontrols:TabView.TabEndHeader>
                 <StackPanel
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
                     <StackPanel           
                         Orientation="Horizontal"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="{StaticResource LeftRightPadding}">
                         <SymbolIcon Symbol="ZoomOut"/>
                         <Slider
                             Width="500"
@@ -132,13 +135,14 @@
                             Maximum="1000"
                             TickFrequency="50"
                             SnapsTo="Ticks"
-                            Value="{x:Bind ViewModel.ThumbnailWidth, Mode=TwoWay}"/>
+                            Value="{x:Bind ViewModel.ThumbnailWidth, Mode=TwoWay}"
+                            Margin="{StaticResource LeftRightPadding}"
+                            VerticalAlignment="Center"/>
                         <SymbolIcon Symbol="ZoomIn"/>
                     </StackPanel>
                     <Button 
                         Width="{StaticResource TabViewItemHeaderMinWidth}"
                         Height="{StaticResource TabViewItemHeaderMinHeight}"
-                        Margin="-1,0,0,0"
                         BorderThickness="1" 
                         Background="Transparent" 
                         Style="{StaticResource ButtonRevealStyle}"

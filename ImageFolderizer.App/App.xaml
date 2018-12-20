@@ -6,7 +6,9 @@
 
     <Application.Resources>
 
-        <Thickness x:Key="ViewPadding">24</Thickness>
+        <Thickness x:Key="ViewPadding">12</Thickness>
+        <Thickness x:Key="LeftRightPadding">12,0</Thickness>
+        <x:Double x:Key="IconSize">48</x:Double>
 
     </Application.Resources>
 

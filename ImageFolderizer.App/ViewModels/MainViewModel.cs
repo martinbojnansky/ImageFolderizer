@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ImageFolderizer.App.Models;
 using ImageFolderizer.App.Services;
 using ImageFolderizer.App.Views;
+using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 
@@ -85,7 +86,15 @@ namespace ImageFolderizer.App.ViewModels
         public async override void OnNavigatedTo(NavigationEventArgs e)
         { 
             base.OnNavigatedTo(e);
-            await LoadSourceMediaFilesAsync();
+
+            try
+            {
+                await LoadSourceMediaFilesAsync();
+            }
+            catch
+            {
+                IsBusy = false;
+            }
         }
 
         public async Task LoadSourceMediaFilesAsync()
@@ -98,6 +107,37 @@ namespace ImageFolderizer.App.ViewModels
             {
                 await file.UpdateThumbnailAsync((uint)ThumbnailWidth);
             }
+        }
+
+        public async Task MoveFilesAsync()
+        {
+            var picker = CreateFolderPicker();
+            var folder = await picker.PickSingleFolderAsync();
+
+            if(folder == null)
+            {
+                return;
+            }
+
+            foreach (var file in MediaFilesToMove)
+            {
+                await file.File.MoveAsync(folder);
+                MediaFiles.Remove(file);
+                PickedMediaFiles.Remove(file);
+                MediaFilesToMove.Remove(file);
+            }
+        }
+
+        private FolderPicker CreateFolderPicker()
+        {
+            var picker = new FolderPicker();
+            picker.ViewMode = PickerViewMode.List;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            return picker;
         }
 
         public void NavigateToSettingsPage()

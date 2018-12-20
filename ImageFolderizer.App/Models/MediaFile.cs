@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageFolderizer.App.Models
@@ -19,6 +20,8 @@ namespace ImageFolderizer.App.Models
         public string FileType { get; }
 
         public BitmapImage Thumbnail { get; private set; }
+
+        public abstract Symbol Icon { get; }
 
         public MediaFile(StorageFile file)
         {

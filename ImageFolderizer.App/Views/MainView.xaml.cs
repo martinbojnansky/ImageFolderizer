@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using ImageFolderizer.App.Models;
+using System.Collections.ObjectModel;
 
 namespace ImageFolderizer.App.Views
 {
@@ -25,6 +26,16 @@ namespace ImageFolderizer.App.Views
         public MainView()
         {
             this.InitializeComponent();
+        }
+
+        private void PickMediaFilesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.PickedMediaFiles = new ObservableCollection<IMediaFile>(PickMediaFilesGridView.SelectedItems.Cast<IMediaFile>());
+        }
+
+        private void MoveMediaFilesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.MediaFilesToMove = new ObservableCollection<IMediaFile>(MoveMediaFilesGridView.SelectedItems.Cast<IMediaFile>());
         }
     }
 }

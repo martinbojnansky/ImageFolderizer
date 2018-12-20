@@ -29,6 +29,30 @@ namespace ImageFolderizer.App.ViewModels
             }
         }
 
+        private ObservableCollection<IMediaFile> _pickedMediaFiles = new ObservableCollection<IMediaFile>();
+
+        public ObservableCollection<IMediaFile> PickedMediaFiles
+        {
+            get => _pickedMediaFiles;
+            set
+            {
+                _pickedMediaFiles = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<IMediaFile> _mediaFilesToMove = new ObservableCollection<IMediaFile>();
+
+        public ObservableCollection<IMediaFile> MediaFilesToMove
+        {
+            get => _mediaFilesToMove;
+            set
+            {
+                _mediaFilesToMove = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool _isBusy = false;
 
         public bool IsBusy

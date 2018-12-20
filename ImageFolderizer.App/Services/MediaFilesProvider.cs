@@ -19,15 +19,14 @@ namespace ImageFolderizer.App.Services
             _settings = settings;
         }
 
-        public async Task<ICollection<IMediaFile>> GetSourceMediaFilesAsync()
+        public async Task LoadSourceMediaFilesToAsync(ObservableCollection<IMediaFile> destination)
         {
-            var mediaFiles = new List<IMediaFile>();
             var folder = await StorageFolder.GetFolderFromPathAsync(_settings.SourceFolder);
 
             if (folder != null)
             {
                 var files = await GetFilesAsync(folder);
-                mediaFiles.Clear();
+                destination.Clear();
 
                 foreach (var file in files)
                 {
@@ -40,16 +39,18 @@ namespace ImageFolderizer.App.Services
                     {
                         case ".jpg":
                         case ".jpeg":
-                            mediaFiles.Add(new ImageFile(file));
+                            var imageFile = new ImageFile(file);
+                            await imageFile.UpdateThumbnailAsync(500);
+                            destination.Add(imageFile);
                             break;
                         case ".mp4":
-                            mediaFiles.Add(new VideoFile(file));
+                            var videoFile = new VideoFile(file);
+                            await videoFile.UpdateThumbnailAsync(500);
+                            destination.Add(videoFile);
                             break;
                     }
                 }
             }
-
-            return mediaFiles;
         }
 
         private async Task<IEnumerable<StorageFile>> GetFilesAsync(IStorageFolder folder)

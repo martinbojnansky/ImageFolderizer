@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageFolderizer.App.Models
 {
-    public abstract class MediaFile : PropertyChangedBase ,IMediaFile
+    public abstract class MediaFile : PropertyChangedBase, IMediaFile
     {
         public StorageFile File { get; }
 

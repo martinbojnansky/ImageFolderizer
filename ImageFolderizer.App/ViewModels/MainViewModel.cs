@@ -102,14 +102,9 @@ namespace ImageFolderizer.App.ViewModels
 
         public async Task LoadSourceMediaFilesAsync()
         {
-            IsBusy = true;
-            MediaFiles = new ObservableCollection<IMediaFile>(await _mediaFilesProvider.GetSourceMediaFilesAsync());
-            IsBusy = false;
-
-            foreach (var file in MediaFiles)
-            {
-                await file.UpdateThumbnailAsync((uint)ThumbnailWidth);
-            }
+            //IsBusy = true;
+            await _mediaFilesProvider.LoadSourceMediaFilesToAsync(MediaFiles);
+            //IsBusy = false;
         }
 
         public async Task MoveFilesAsync()

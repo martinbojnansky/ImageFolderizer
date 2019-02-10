@@ -20,8 +20,9 @@
             x:Name="ImagePlayer"
             Stretch="Uniform"/>
         <Button 
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Top"
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Stretch"
+            Style="{StaticResource AccentButtonStyle}"
             HorizontalContentAlignment="Center"
             Click="{x:Bind Close}">
             <SymbolIcon

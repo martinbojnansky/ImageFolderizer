@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using ImageFolderizer.App.Models;
 using ImageFolderizer.App.Services;
 using ImageFolderizer.App.Views;
+using Microsoft.Toolkit.Collections;
+using Microsoft.Toolkit.Uwp;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
@@ -17,10 +19,10 @@ namespace ImageFolderizer.App.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private IMediaFilesProvider _mediaFilesProvider;
+        
+        private IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile> _mediaFiles;
 
-        private ObservableCollection<IMediaFile> _mediaFiles = new ObservableCollection<IMediaFile>();
-
-        public ObservableCollection<IMediaFile> MediaFiles
+        public IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile> MediaFiles
         {
             get => _mediaFiles;
             set
@@ -84,27 +86,18 @@ namespace ImageFolderizer.App.ViewModels
         public MainViewModel(IMediaFilesProvider mediaFilesProvider)
         {
             _mediaFilesProvider = mediaFilesProvider;
+            MediaFiles = new IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile>(_mediaFilesProvider, itemsPerPage: 100);
         }
 
         public async override void OnNavigatedTo(NavigationEventArgs e)
         { 
             base.OnNavigatedTo(e);
-
-            try
-            {
-                await LoadSourceMediaFilesAsync();
-            }
-            catch
-            {
-                IsBusy = false;
-            }
+            await LoadMoreMediaFiles();
         }
 
-        public async Task LoadSourceMediaFilesAsync()
+        public async Task LoadMoreMediaFiles()
         {
-            //IsBusy = true;
-            await _mediaFilesProvider.LoadSourceMediaFilesToAsync(MediaFiles);
-            //IsBusy = false;
+            await MediaFiles.LoadMoreItemsAsync(100);
         }
 
         public async Task MoveFilesAsync()

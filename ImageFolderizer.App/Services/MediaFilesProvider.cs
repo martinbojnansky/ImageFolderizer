@@ -53,7 +53,7 @@ namespace ImageFolderizer.App.Services
             }
         }
 
-        private async Task<IEnumerable<StorageFile>> GetFilesAsync(IStorageFolder folder)
+        private async Task<IEnumerable<StorageFile>> GetFilesAsync(StorageFolder folder)
         {
             var items = await folder.GetItemsAsync();
             var files = new List<StorageFile>();

@@ -1,4 +1,5 @@
 ﻿using ImageFolderizer.App.Models;
+using ImageFolderizer.App.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,6 @@ namespace ImageFolderizer.App.ViewModels
             Settings.SourceFolder = folder.Path;
         }
 
-        public async Task SelectDestinationFolderAsync()
-        {
-            var picker = CreateFolderPicker();
-            var folder = await picker.PickSingleFolderAsync();
-
-            Settings.DestinationFolder = folder.Path;
-        }
-
         private FolderPicker CreateFolderPicker()
         {
             var picker = new FolderPicker();
@@ -43,6 +36,11 @@ namespace ImageFolderizer.App.ViewModels
             picker.FileTypeFilter.Add(".png");
 
             return picker;
+        }
+
+        public void NavigateToMainView()
+        {
+            Navigation.GoTo(typeof(MainView));
         }
     }
 }

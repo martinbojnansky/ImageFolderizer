@@ -22,9 +22,9 @@
         <Button 
             HorizontalAlignment="Right" 
             VerticalAlignment="Stretch"
-            Style="{StaticResource AccentButtonStyle}"
             HorizontalContentAlignment="Center"
-            Click="{x:Bind Close}">
+            Click="{x:Bind Close}"
+            Style="{StaticResource AccentButtonStyle}">
             <SymbolIcon
                 Symbol="Cancel"
                 Foreground="White"

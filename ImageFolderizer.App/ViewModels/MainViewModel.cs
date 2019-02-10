@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using ImageFolderizer.App.Models;
 using ImageFolderizer.App.Services;
 using ImageFolderizer.App.Views;
-using Microsoft.Toolkit.Collections;
-using Microsoft.Toolkit.Uwp;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
@@ -19,10 +17,10 @@ namespace ImageFolderizer.App.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private IMediaFilesProvider _mediaFilesProvider;
-        
-        private IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile> _mediaFiles;
 
-        public IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile> MediaFiles
+        private ObservableCollection<IMediaFile> _mediaFiles = new ObservableCollection<IMediaFile>();
+
+        public ObservableCollection<IMediaFile> MediaFiles
         {
             get => _mediaFiles;
             set
@@ -86,18 +84,27 @@ namespace ImageFolderizer.App.ViewModels
         public MainViewModel(IMediaFilesProvider mediaFilesProvider)
         {
             _mediaFilesProvider = mediaFilesProvider;
-            MediaFiles = new IncrementalLoadingCollection<IMediaFilesProvider, IMediaFile>(_mediaFilesProvider, itemsPerPage: 100);
         }
 
         public async override void OnNavigatedTo(NavigationEventArgs e)
         { 
             base.OnNavigatedTo(e);
-            await LoadMoreMediaFiles();
+
+            try
+            {
+                await LoadSourceMediaFilesAsync();
+            }
+            catch
+            {
+                IsBusy = false;
+            }
         }
 
-        public async Task LoadMoreMediaFiles()
+        public async Task LoadSourceMediaFilesAsync()
         {
-            await MediaFiles.LoadMoreItemsAsync(100);
+            //IsBusy = true;
+            await _mediaFilesProvider.LoadSourceMediaFilesToAsync(MediaFiles);
+            //IsBusy = false;
         }
 
         public async Task MoveFilesAsync()
@@ -129,11 +136,6 @@ namespace ImageFolderizer.App.ViewModels
             picker.FileTypeFilter.Add(".png");
 
             return picker;
-        }
-
-        public void NavigateToSettingsPage()
-        {
-            Navigation.GoTo(typeof(SettingsView));
         }
     }
 }

@@ -15,31 +15,31 @@
 
     <ScrollViewer
         Padding="{StaticResource ViewPadding}">
-        <StackPanel>
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
             <wcontrols:HeaderedContentControl
-                Header="Sources">
+                Header="Selected source folder"
+                FontWeight="Medium">
                 <StackPanel
-                    Orientation="Horizontal">
+                    Orientation="Vertical">
+                    <TextBlock
+                        Text="{x:Bind ViewModel.Settings.SourceFolder, Mode=OneWay}"
+                        TextWrapping="Wrap"
+                        FontWeight="Normal"
+                        Margin="0,6,0,6"/>
                     <Button
                         Content="Change"
                         Click="{x:Bind ViewModel.SelectSourceFolderAsync}"/>
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Settings.SourceFolder, Mode=OneWay}"
-                        TextWrapping="Wrap"/>
                 </StackPanel>
             </wcontrols:HeaderedContentControl>
-            <!--<wcontrols:HeaderedContentControl
-                Header="Destination">
-                <StackPanel
-                    Orientation="Horizontal">
-                    <Button
-                        Content="Change"
-                        Click="{x:Bind ViewModel.SelectDestinationFolderAsync}"/>
-                    <TextBlock
-                        Text="{x:Bind ViewModel.Settings.DestinationFolder, Mode=OneWay}"
-                        TextWrapping="Wrap"/>
-                </StackPanel>
-            </wcontrols:HeaderedContentControl>-->
+            <Button 
+                Content="Start"
+                Click="{x:Bind ViewModel.NavigateToMainView}"
+                Style="{StaticResource AccentButtonStyle}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Margin="0,24,0,0"/>
         </StackPanel>
     </ScrollViewer>
 </navigation:NavigationPage>

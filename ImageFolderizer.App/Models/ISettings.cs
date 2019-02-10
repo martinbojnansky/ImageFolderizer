@@ -7,7 +7,6 @@ namespace ImageFolderizer.App.Models
 {
     public interface ISettings : INotifyPropertyChanged
     {
-        string DestinationFolder { get; set; }
         string SourceFolder { get; set; }
     }
 }

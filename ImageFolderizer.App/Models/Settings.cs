@@ -34,26 +34,6 @@ namespace ImageFolderizer.App.Models
             }
         }
 
-        public string DestinationFolder
-        {
-            get
-            {
-                try
-                {
-                    return _localObjectStorage.GetValue<string>(Constants.DestinationFolderKey, Constants.SettingsContainerKey);
-                }
-                catch (KeyNotFoundException)
-                {
-                    return null;
-                }
-            }
-            set 
-            {
-                _localObjectStorage.SetValue(Constants.DestinationFolderKey, value, Constants.SettingsContainerKey);
-                RaisePropertyChanged();
-            }
-        }
-
         public Settings(ILocalObjectStorage localObjectStorage)
         {
             _localObjectStorage = localObjectStorage;

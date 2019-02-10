@@ -1,12 +1,12 @@
-﻿using ImageFolderizer.App.Models;
-using Microsoft.Toolkit.Collections;
-using System.Collections.Generic;
+﻿
+using ImageFolderizer.App.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace ImageFolderizer.App.Services
 {
-    public interface IMediaFilesProvider : IIncrementalSource<IMediaFile>
+    public interface IMediaFilesProvider
     {
+        Task LoadSourceMediaFilesToAsync(ObservableCollection<IMediaFile> destination);
     }
 }

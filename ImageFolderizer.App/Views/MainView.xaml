@@ -27,68 +27,44 @@
                 Header="Pick"
                 Icon="List"
                 Width="{StaticResource TabViewItemHeaderMaxWidth}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <GridView
-                        x:Name="PickMediaFilesGridView"
-                        ItemsSource="{x:Bind ViewModel.MediaFiles, Mode=OneWay}"
-                        SelectionMode="Multiple"
-                        SelectionChanged="PickMediaFilesGridView_SelectionChanged">
-                        <GridView.ItemTemplate>
-                            <DataTemplate
-                                x:DataType="models:MediaFile">
-                                <Grid
-                                    HorizontalAlignment="Center"
-                                    MaxHeight="{Binding ViewModel.ThumbnailMaxHeight, ElementName=Root}">
-                                    <Image 
-                                        Stretch="Uniform"
-                                        Source="{x:Bind Thumbnail, Mode=OneWay}"/>
-                                    <Button 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Bottom"
-                                        HorizontalContentAlignment="Center"
+                <GridView
+                    x:Name="PickMediaFilesGridView"
+                    ItemsSource="{x:Bind ViewModel.MediaFiles, Mode=OneWay}"
+                    SelectionMode="Multiple"
+                    SelectionChanged="PickMediaFilesGridView_SelectionChanged">
+                    <GridView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="models:MediaFile">
+                            <Grid
+                                HorizontalAlignment="Center"
+                                MaxHeight="{Binding ViewModel.ThumbnailMaxHeight, ElementName=Root}">
+                                <Image 
+                                    Stretch="Uniform"
+                                    Source="{x:Bind Thumbnail, Mode=OneWay}"/>
+                                <Button 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Bottom"
+                                    HorizontalContentAlignment="Center"
+                                    Click="PlayMediaButton_Click">
+                                    <SymbolIcon
+                                        Symbol="{x:Bind Icon}"
                                         Foreground="White"
-                                        Style="{StaticResource TextBlockButtonStyle}"
-                                        Click="PlayMediaButton_Click">
-                                        <SymbolIcon
-                                            Symbol="{x:Bind Icon}"
-                                            Width="{StaticResource IconSize}"
-                                            Height="{StaticResource IconSize}"
-                                        />
-                                    </Button>
-                                </Grid>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <wcontrols:StaggeredPanel 
-                                    DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, ElementName=Root}"
-                                    HorizontalAlignment="Stretch"
-                                    Margin="{StaticResource ViewPadding}"/>
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                    </GridView>
-                    <Button 
-                        Grid.Row="1"
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Bottom"
-                        HorizontalContentAlignment="Center"
-                        Style="{StaticResource AccentButtonStyle}"
-                        Click="{x:Bind ViewModel.LoadMoreMediaFiles}">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon
-                                Symbol="More" 
-                                Width="{StaticResource IconSize}"
-                                Height="{StaticResource IconSize}"/>
-                            <TextBlock
-                                Text="Load More"
-                                VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
+                                        Width="{StaticResource IconSize}"
+                                        Height="{StaticResource IconSize}"
+                                    />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <wcontrols:StaggeredPanel 
+                                DesiredColumnWidth="{Binding ViewModel.ThumbnailWidth, ElementName=Root}"
+                                HorizontalAlignment="Stretch"
+                                Margin="{StaticResource ViewPadding}"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
             </wcontrols:TabViewItem>
             <wcontrols:TabViewItem
                 Header="Move"
@@ -161,20 +137,10 @@
                             TickFrequency="50"
                             SnapsTo="Ticks"
                             Value="{x:Bind ViewModel.ThumbnailWidth, Mode=TwoWay}"
-                            Margin="12,4,12,0"/>
+                            Margin="12,4,12,0"
+                            VerticalAlignment="Center"/>
                         <SymbolIcon Symbol="ZoomIn"/>
                     </StackPanel>
-                    <Button 
-                        Width="{StaticResource TabViewItemHeaderMinWidth}"
-                        Height="{StaticResource TabViewItemHeaderMinHeight}"
-                        BorderThickness="1" 
-                        Background="Transparent" 
-                        Style="{StaticResource ButtonRevealStyle}"
-                        Click="{x:Bind ViewModel.NavigateToSettingsPage}">
-                        <Viewbox MaxWidth="16" MaxHeight="16">
-                            <SymbolIcon Symbol="Setting"/>
-                        </Viewbox>
-                    </Button>
                 </StackPanel>
             </wcontrols:TabView.TabEndHeader>
         </wcontrols:TabView>

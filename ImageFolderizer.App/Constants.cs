@@ -10,6 +10,5 @@ namespace ImageFolderizer.App
     {
         public static readonly string SettingsContainerKey = "Settings";
         public static readonly string SourceFolderKey = "SourceFolder";
-        public static readonly string DestinationFolderKey = "DestinationFolder";
     }
 }

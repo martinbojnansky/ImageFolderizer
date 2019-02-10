@@ -22,10 +22,10 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="media">
+          <uap:FileTypeAssociation Name="images">
             <uap:SupportedFileTypes>
-              <uap:FileType>.mp4</uap:FileType>
-              <uap:FileType>.jpg</uap:FileType>
+              <uap:FileType ContentType="media/image">.jpg</uap:FileType>
+              <uap:FileType ContentType="media/image">.jpeg</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
@@ -33,7 +33,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
     <uap:Capability Name="picturesLibrary" />
     <uap:Capability Name="videosLibrary" />
     <uap:Capability Name="removableStorage" />

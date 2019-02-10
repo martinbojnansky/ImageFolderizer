@@ -43,11 +43,11 @@ namespace ImageFolderizer.App.Services
                             await imageFile.UpdateThumbnailAsync(500);
                             destination.Add(imageFile);
                             break;
-                        case ".mp4":
-                            var videoFile = new VideoFile(file);
-                            await videoFile.UpdateThumbnailAsync(500);
-                            destination.Add(videoFile);
-                            break;
+                        //case ".mp4":
+                        //    var videoFile = new VideoFile(file);
+                        //    await videoFile.UpdateThumbnailAsync(500);
+                        //    destination.Add(videoFile);
+                        //    break;
                     }
                 }
             }
